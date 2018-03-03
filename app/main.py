@@ -45,7 +45,8 @@ def start():
 def move():
     data = bottle.request.json
     print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
-    print(data)
+    for item in data.items():
+        print(item)
     print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
     snake_commander = snake_commanders[data.get('id')]
     next_move = snake_commander.get_move(data)
