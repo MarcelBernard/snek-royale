@@ -2,7 +2,7 @@ gunicorn==19.7.1
 bottle==0.12.13
 gevent==1.2.0
 greenlet==0.4.12
-numpy==1.9.0
+numpy==1.12.1
 
 
 
