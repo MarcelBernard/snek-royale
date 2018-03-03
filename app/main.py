@@ -1,5 +1,6 @@
 import bottle
 import os
+import pprint
 
 from .snake_control import SnakeHighCommand
 from .states import FeedingState
@@ -32,7 +33,9 @@ def start():
                                                              data.get('width'),
                                                              data.get('height'),
                                                              data.get('game_id'))
+    pp = pprint.PrettyPrinter(indent=4)
     print('SNAKE COMMANDERS W%&(*#@&(%*(%&@#(*%&*(@#&(*$&(@#(*&$()@#)$*(&@#(*%^@&#%&%(*#&%#&(%*&(#@(*%&@(#*%&(@*&%')
+    pp.pprint(snake_commanders)
     print(snake_commanders)
     print('JEFFO DAVO STEPH MARCEL')
 
