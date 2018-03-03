@@ -1,3 +1,6 @@
+from snake_control import Moves, TileType
+
+
 # Handles getting food for the snake
 from snake_control import TileType, TileNode, Moves
 import numpy as np
@@ -7,10 +10,20 @@ class FeedingState:
     """It's feeding time"""
     def __init__(self):
         self._next_move = None
+        # if a food is within this radius, it's easy to grab so we should
+        self.easy_food_radius = 3
 
-    def eval(self, my_snake, other_snakes, board):
+    def eval(self, snake_high_command):
         eval_val = 0
-        eval_val += 100 - my_snake.health
+        eval_val += 100 - snake_high_command.my_snake.health
+
+        easy_food = []
+
+        # for each food in snake_high_command.food_positions
+            # if food distance < easy_food_radius
+                # add this food to easy_food
+
+        # if easy food is reachable with a*, then raise eval_val
 
         # TODO: get info about food nearby and add that to the eval
         
@@ -125,3 +138,25 @@ class KillState:
         pass
 
     def next_move(self): return self._next_move
+
+# Returns the Manhattan distance between an origin and target
+def get_manhattan_distance(origin, target):
+    return abs(origin.x - target.x) + abs(origin.y - target.y)
+
+# Check if a given move is valid
+def check_valid(move, high_command):
+    next_tile = high_command.my_snake.head
+    if move == Moves.UP:
+        next_tile[1] -= 1
+    elif move == Moves.DOWN:
+        next_tile[1] += 1
+    elif move == Moves.RIGHT:
+        next_tile[0] += 1
+    elif move == Moves.LEFT:
+        next_tile[0] -= 1
+
+    is_valid = False
+    if high_command.board[next_tile[0], next_tile[1]].type in [TileType.FOOD, TileType.EMPTY]:
+        is_valid = True
+
+    return is_valid
