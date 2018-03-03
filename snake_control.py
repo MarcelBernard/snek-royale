@@ -11,7 +11,14 @@ class BoardMarks(Enum):
     ENEMY_HEAD = 5
 
 
-class MySnake():
+class Moves(Enum):
+    UP = 'up'
+    DOWN = 'down'
+    LEFT = 'left'
+    RIGHT = 'right'
+
+
+class MySnake:
     def __init(self, positions, hunger):
         self.positions = positions
         self.hunger = hunger
