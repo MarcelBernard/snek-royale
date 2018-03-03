@@ -1,7 +1,6 @@
 from enum import Enum
 import numpy as np
 
-
 class BoardMarks(Enum):
     EMPTY = 0
     FOOD = 1
