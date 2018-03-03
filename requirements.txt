@@ -1,0 +1,8 @@
+gunicorn==19.7.1
+bottle==0.12.13
+gevent==0.4.10
+greenlet==0.4.12
+
+
+
+
