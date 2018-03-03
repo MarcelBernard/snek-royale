@@ -43,7 +43,6 @@ def process_move(data)
         grid[0][y] = WALL
         grid[len(grid[0]) - 1][y] = WALL
 
-
     for snake in data['snakes']:
         if snake['id'] == data['you']:
             mysnake = snake
@@ -77,6 +76,8 @@ def process_move(data)
 @bottle.post('/move')
 def move():
     data = bottle.request.json
+
+    mysnake, grid = init(data)
 
     # TODO: Do things with data
 
