@@ -5,7 +5,7 @@ from snake_control import SnakeHighCommand
 from states import FeedingState
 
 
-snake_commander = None
+snake_commanders = {}
 
 
 @bottle.route('/')
@@ -18,15 +18,14 @@ def static(path):
     return bottle.static_file(path, root='static/')
 
 
-@bottle.post('/start')
-def start():
-    data = bottle.request.json
+#@bottle.post('/start')
+def start(data):
+    # data = bottle.request.json
 
-    global snake_commander
-    snake_commander = SnakeHighCommand([FeedingState],
-                                       data.get('width'),
-                                       data.get('height'),
-                                       data.get('id'))
+    snake_commanders[data.get('game_id')] = SnakeHighCommand([],
+                                                             data.get('width'),
+                                                             data.get('height'),
+                                                             data.get('game_id'))
 
     head_url = 'https://github.com/sendwithus/battlesnake-server/blob/master/assets/static/images/snake/head/tongue.svg'
 
@@ -78,9 +77,11 @@ def process_move(data):
     return mysnake, grid
 
 
-@bottle.post('/move')
-def move():
-    data = bottle.request.json
+# @bottle.post('/move')
+def move(data):
+    # data = bottle.request.json
+    snake_commander = snake_commanders[data.get('id')]
+    next_move = snake_commander.get_move(data)
 
     # TODO: Do things with data
 
@@ -99,13 +100,30 @@ def death_log():
     with open('death_log.txt', 'a') as f:
         f.write(data)
 
+    del snake_commanders[data.get('game_id')]
+
 
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()
 
 if __name__ == '__main__':
-    bottle.run(
-        application,
-        host=os.getenv('IP', '0.0.0.0'),
-        port=os.getenv('PORT', '8080'),
-        debug=True)
+    # bottle.run(
+    #     application,
+    #     host=os.getenv('IP', '0.0.0.0'),
+    #     port=os.getenv('PORT', '8080'),
+    #     debug=True)
+
+    start_data = {
+        "game_id": 1,
+        "width": 20,
+        "height": 20
+    }
+
+    start(start_data)
+    import json
+
+    with open('test_input.json') as f:
+        # data = f.read()
+        move_data = json.load(f)
+
+    move(move_data)

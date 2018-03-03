@@ -27,9 +27,14 @@ class TileNode:
         # Weight of the tile used by a path finding algorithm
         self.weight = weight
 
+    def clear_node(self):
+        self.type = TileType.EMPTY
+        self.snakeID = ''
+        self.weight = 0
+
 # Contains information about our snake
 class MySnake:
-    def __init__(self, positions, health, previous_move):
+    def __init__(self, positions, health, previous_move, snake_id, length, name, taunt):
         # Position of the head with x, y coord
         self.head = positions[0]
         # List of positions with x, y coords
@@ -38,42 +43,105 @@ class MySnake:
         self.health = health
         # Previous move : 'up' 'down' 'left' 'right'
         self.previous_move = previous_move
+        self.snake_id = snake_id
+        self.length = length
+        self.name = name
+        self.taunt = taunt
+
 
 # Controls processing move requests and returning a move
 class SnakeHighCommand:
     def __init__(self, states, board_width, board_height, game_id):
         self.states = states
+        self.game_id = game_id
+        self.turn_num = 0
+        self.my_snake = MySnake([0], None, None, None, None, None, None)
+        self.other_snakes = None
+        self.food_positions = []
 
         # 2D array of nodes representing the board # TODO: Add nodes, not ints
-        self.board = np.empty((board_height, board_width), dtype=object)
-        for i in range(board_height):
-            for j in range(board_width):
+        self.board = np.empty((board_width, board_height), dtype=object)
+        for i in range(board_width):
+            for j in range(board_height):
                 self.board[i][j] = TileNode(TileType.EMPTY, 0, 0)
 
-        self.game_id = game_id
-        self.my_snake = MySnake([0], 100, Moves.UP)
-
     # Gets the next move (200 ms max response)
-    def get_move(self, board_state):
-        # parse the board state
-        self.parse_board_state(board_state)
+    def get_move(self, data):
+        self.parse_board_state(data)
 
-        # Tracks the highest evaluation value
         highest_eval = -1
-        # Tracks the state with the highest evaluation value
         winner_state = None
 
         # Ask each state for its evaluation value, tracking the state with the highest value
-        for state in self.states:
-            evaluation = state.eval(board_state, self.my_snake)
-            if evaluation > highest_eval:
-                highest_eval = evaluation
-                winner_state = state
+        # for state in self.states:
+        #     evaluation = state.eval(self)
+        #     if evaluation > highest_eval:
+        #         highest_eval = evaluation
+        #         winner_state = state
 
-        # Based on the winning state, get the next move from that state
-        return winner_state.next_move()
+        # return winner_state.next_move()
 
     # Populates the board with node information
-    def parse_board_state(self, board_state):
+    def parse_board_state(self, data):
         """Load board state into numpy array"""
-        pass
+        self.turn_num = data['turn']
+
+        my_snake = data['you']
+        self.my_snake.health = my_snake['health']
+        self.my_snake.id = my_snake['id']
+        self.my_snake.length = my_snake['length']
+        self.my_snake.name = my_snake['name']
+        self.my_snake.taunt = my_snake['taunt']
+        self.my_snake.positions = [(my_pos['x'], my_pos['y']) for my_pos in my_snake['body']['data']]
+        self.my_snake.head = self.my_snake.positions[0]
+
+        self.other_snakes = self.get_other_snakes(data['snakes']['data'])
+        self.food_positions = [(food_pos['x'], food_pos['y']) for food_pos in data['food']['data']]
+        self.fill_board()
+
+    def get_other_snakes(self, snakes):
+        other_snakes = {}
+        for snake_data in snakes:
+            positions = [(body_pos['x'], body_pos['y']) for body_pos in snake_data['body']['data']]
+            new_snake = OtherSnake(snake_data['id'],
+                                   snake_data['health'],
+                                   snake_data['length'],
+                                   snake_data['name'],
+                                   snake_data['taunt'],
+                                   positions)
+
+            other_snakes[new_snake.snake_id] = new_snake
+
+        return other_snakes
+
+    def fill_board(self):
+        board = self.board
+        for (x, y), tile in np.ndenumerate(board):
+            tile.clear_node()
+
+        for food in self.food_positions:
+            board[food[0], food[1]].type = TileType.FOOD
+
+        for snake in self.other_snakes.values():
+            for position in snake.positions:
+                tile = board[position[0], position[1]]
+                tile.type = TileType.ENEMY_BODY
+                tile.snakeID = snake.snake_id
+                tile.weight = 100
+
+        my_snake = self.my_snake
+        for position in my_snake.positions:
+            tile = board[position[0], position[1]]
+            tile.type = TileType.MY_BODY
+            tile.snakeID = my_snake.snake_id
+            tile.weight = 100
+
+
+class OtherSnake:
+    def __init__(self, snake_id, health, length, name, taunt, positions):
+        self.snake_id = snake_id
+        self.health = health
+        self.length = length
+        self.name = name
+        self.taunt = taunt
+        self.positions = positions
