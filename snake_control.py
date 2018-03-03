@@ -28,6 +28,19 @@ class MySnake:
         self.hunger = hunger
 
 
+class Moves(Enum):
+    UP = 'up'
+    DOWN = 'down'
+    LEFT = 'left'
+    RIGHT = 'right'
+
+
+class MySnake:
+    def __init(self, positions, hunger):
+        self.positions = positions
+        self.hunger = hunger
+
+
 class SnakeHighCommand:
     def __init__(self, states, board_width, board_height, game_id):
         self.states = states
