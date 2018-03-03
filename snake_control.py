@@ -32,21 +32,19 @@ class MySnake:
     def __init(self, positions, health, previous_move):
         # Position of the head with x, y coord
         self.head = positions[0]
-        # List of positions with x,y coords
+        # List of positions with x, y coords
         self.positions = positions
-        # Health of our snake
+        # Health of our snake, max is 100 and 0 is dead
         self.health = health
-        # Previous move
+        # Previous move : 'up' 'down' 'left' 'right'
         self.previous_move = previous_move
 
 # Controls processing move requests and returning a move
 class SnakeHighCommand:
     def __init__(self, states, board_width, board_height, game_id):
-        # List of states we will be using 
         self.states = states
         # 2D array of nodes representing the board # TODO: Add nodes, not ints
         self.board = np.zeros((board_width, board_height), dtype=int)
-        # ID of this game
         self.game_id = game_id
 
     # Gets the next move (200 ms max response)
