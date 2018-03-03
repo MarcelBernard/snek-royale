@@ -49,8 +49,13 @@ def start():
 
 
 @bottle.post('/move')
-def move():
+def move(snake_commander):
     data = bottle.request.json
+    pp = pprint.PrettyPrinter(indent=4)
+    print('SNAKE COMMANDERS W%&(*#@&(%*(%&@#(*%&*(@#&(*$&(@#(*&$()@#)$*(&@#(*%^@&#%&%(*#&%#&(%*&(#@(*%&@(#*%&(@*&%')
+    pp.pprint(snake_commanders)
+    print(snake_commanders)
+    print('JEFFO DAVO STEPH MARCEL')
     print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
     for item in data.items():
         print(item)
