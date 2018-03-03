@@ -1,8 +1,8 @@
 import bottle
 import os
 
-from snake_control import SnakeHighCommand
-from states import FeedingState
+from .snake_control import SnakeHighCommand
+from .states import FeedingState
 
 
 snake_commanders = {}

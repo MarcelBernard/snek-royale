@@ -1,8 +1,4 @@
-from snake_control import Moves, TileType
-
-
-# Handles getting food for the snake
-from snake_control import TileType, TileNode, Moves
+from .snake_control import Moves, TileType, TileNode
 import numpy as np
 
 
