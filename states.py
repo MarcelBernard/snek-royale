@@ -41,10 +41,15 @@ class BloodfillState:
     """Time to get filled"""
     def __init__(self):
         self._next_move = None
+        self._prev_move = None
+
+    def eval(self, MySnake, game_board):
+        if MySnake.previous_move is None:
+            return 0
+
 
     def eval(self, my_snake, other_snakes, board):
-        pass
-
+	pass
     def next_move(self): return self._next_move
 
 
