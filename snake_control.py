@@ -9,6 +9,11 @@ class BoardMarks(Enum):
     ENEMY_BODY = 4
     ENEMY_HEAD = 5
 
+class TileNode:
+    def __init__(self, BoardMarks, snakeID, tileCost):
+        self.mark = BoardMarks
+        self.snakeID = snakeID
+        self.tileCost = tileCost
 
 class Moves(Enum):
     UP = 'up'
