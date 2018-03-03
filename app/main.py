@@ -21,7 +21,12 @@ def static(path):
 @bottle.post('/start')
 def start():
     data = bottle.request.json
-
+    print('STARTING++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+    print()
+    print()
+    print(data)
+    print()
+    print()
     snake_commanders[data.get('game_id')] = SnakeHighCommand([FeedingState],
                                                              data.get('width'),
                                                              data.get('height'),
