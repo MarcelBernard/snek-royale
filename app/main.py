@@ -5,7 +5,7 @@ from .snake_control import SnakeHighCommand
 from .states import FeedingState
 
 
-snake_commanders = {}
+snake_commanders = dict()
 
 
 @bottle.route('/')
