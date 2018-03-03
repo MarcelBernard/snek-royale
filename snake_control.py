@@ -11,6 +11,12 @@ class BoardMarks(Enum):
     ENEMY_HEAD = 5
 
 
+class MySnake():
+    def __init(self, positions, hunger):
+        self.positions = positions
+        self.hunger = hunger
+
+
 class SnakeHighCommand:
     def __init__(self, states, board_width, board_height, game_id):
         self.states = states
