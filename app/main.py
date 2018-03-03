@@ -29,7 +29,7 @@ def start():
     print()
     print()
     global snake_commanders
-    snake_commanders[data.get('game_id')] = SnakeHighCommand([FeedingState],
+    snake_commanders[int(data.get('game_id'))] = SnakeHighCommand([FeedingState],
                                                              data.get('width'),
                                                              data.get('height'),
                                                              data.get('game_id'))
@@ -55,7 +55,7 @@ def move():
     for item in data.items():
         print(item)
     print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
-    snake_commander = snake_commanders[data.get('id')]
+    snake_commander = snake_commanders[int(data.get('id'))]
     next_move = snake_commander.get_move(data)
 
     return {
