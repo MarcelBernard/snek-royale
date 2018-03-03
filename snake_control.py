@@ -65,7 +65,7 @@ class SnakeHighCommand:
         self.board = np.empty((board_width, board_height), dtype=object)
         for i in range(board_width):
             for j in range(board_height):
-                self.board[i][j] = TileNode(TileType.EMPTY, 0, 0)
+                self.board[i][j] = TileNode(TileType.EMPTY, 0, 0, (0, 0))
 
     # Gets the next move (200 ms max response)
     def get_move(self, data):
