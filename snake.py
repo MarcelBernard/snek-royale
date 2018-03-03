@@ -32,7 +32,7 @@ def start():
         'head_url': head_url
     }
 
-def process_move(data)
+def process_move(data):
     grid = [[SAFE for col in xrange(data['height'])] for row in xrange(data['width'])]
 
     for x in xrange(len(grid)):
