@@ -29,7 +29,7 @@ class TileNode:
 
 # Contains information about our snake
 class MySnake:
-    def __init(self, positions, health, previous_move):
+    def __init__(self, positions, health, previous_move):
         # Position of the head with x, y coord
         self.head = positions[0]
         # List of positions with x, y coords
@@ -43,9 +43,15 @@ class MySnake:
 class SnakeHighCommand:
     def __init__(self, states, board_width, board_height, game_id):
         self.states = states
+
         # 2D array of nodes representing the board # TODO: Add nodes, not ints
-        self.board = np.zeros((board_width, board_height), dtype=int)
+        self.board = np.empty((board_height, board_width), dtype=object)
+        for i in range(board_height):
+            for j in range(board_width):
+                self.board[i][j] = TileNode(TileType.EMPTY, 0, 0)
+
         self.game_id = game_id
+        self.my_snake = MySnake([0], 100, Moves.UP)
 
     # Gets the next move (200 ms max response)
     def get_move(self, board_state):
@@ -59,7 +65,7 @@ class SnakeHighCommand:
 
         # Ask each state for its evaluation value, tracking the state with the highest value
         for state in self.states:
-            evaluation = state.eval(board_state)
+            evaluation = state.eval(board_state, self.my_snake)
             if evaluation > highest_eval:
                 highest_eval = evaluation
                 winner_state = state
