@@ -9,7 +9,7 @@ import numpy as np
 class FeedingState:
     """It's feeding time"""
     def __init__(self):
-        self._next_move = None
+        self._next_move = Moves.RIGHT
         # if a food is within this radius, it's easy to grab so we should
         self.easy_food_radius = 3
 
