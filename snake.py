@@ -1,6 +1,9 @@
 import bottle
 import os
 
+from snake_control import SnakeHighCommand
+from states import FeedingState
+
 
 @bottle.route('/')
 def static():
@@ -15,14 +18,17 @@ def static(path):
 @bottle.post('/start')
 def start():
     data = bottle.request.json
-    game_id = data.get('game_id')
+    snake_commander = SnakeHighCommand(data)
+    game_id = data.get('id')
     board_width = data.get('width')
     board_height = data.get('height')
 
-    head_url = '%s://%s/static/head.png' % (
-        bottle.request.urlparts.scheme,
-        bottle.request.urlparts.netloc
-    )
+    head_url = 'https://github.com/sendwithus/battlesnake-server/blob/master/assets/static/images/snake/head/tongue.svg'
+
+    # head_url = '%s://%s/static/head.png' % (
+    #     bottle.request.urlparts.scheme,
+    #     bottle.request.urlparts.netloc
+    # )
 
     # TODO: Do things with data
 
@@ -32,7 +38,11 @@ def start():
         'head_url': head_url
     }
 
+
+
 def process_move(data):
+
+
     grid = [[SAFE for col in xrange(data['height'])] for row in xrange(data['width'])]
 
     for x in xrange(len(grid)):
@@ -72,7 +82,6 @@ def process_move(data):
     return mysnake, grid
 
 
-
 @bottle.post('/move')
 def move():
     data = bottle.request.json
@@ -88,6 +97,13 @@ def move():
         'move': direction,
         'taunt': 'battlesnake-python!'
     }
+
+
+@bottle.post('/end')
+def death_log():
+    data = bottle.request.json
+    with open('death_log.txt', 'a') as f:
+        f.write(data)
 
 
 # Expose WSGI app (so gunicorn can find it)
