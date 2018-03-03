@@ -32,7 +32,7 @@ class CounterBloodfillState:
 
 
 class BloodfillState:
-    # TODO: sick movie quote
+    """Time to get filled"""
     def __init__(self):
         self._next_move = None
 

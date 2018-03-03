@@ -6,6 +6,7 @@ SNAKE_BODY = 4
 SNAKE_HEAD = 5
 
 class Node:
+    
     def __init__(self, value, point):
         self.value = value
         self.point = point
@@ -55,7 +56,7 @@ def children(point, grid):
     return value
 '''
 
-def next_move(pacman,food,grid):
+def next_move(pacman, food,grid):
     #Convert all the points to instances of Node
     for x in xrange(len(grid)):
         for y in xrange(len(grid[x])):
