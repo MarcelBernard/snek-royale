@@ -14,8 +14,7 @@ class FeedingState:
         self.easy_food_radius = 3
 
     def eval(self, snake_high_command):
-        eval_val = 0
-        eval_val += 100 - snake_high_command.my_snake.health
+        eval_val = 100 - snake_high_command.my_snake.health
 
         easy_food = []
 
@@ -23,7 +22,13 @@ class FeedingState:
             # if food distance < easy_food_radius
                 # add this food to easy_food
 
+        for food_position in snake_high_command.food_positions:
+            if get_manhattan_distance(snake_high_command.my_snake.head, food_position) < self.easy_food_radius:
+                easy_food.append(food_position)
+
         # if easy food is reachable with a*, then raise eval_val
+        # for food_position in easy_food:
+
 
         # TODO: get info about food nearby and add that to the eval
         
@@ -141,7 +146,7 @@ class KillState:
 
 # Returns the Manhattan distance between an origin and target
 def get_manhattan_distance(origin, target):
-    return abs(origin.x - target.x) + abs(origin.y - target.y)
+    return abs(origin[0] - target[0]) + abs(origin[1] - target[1])
 
 # Check if a given move is valid
 def check_valid(move, high_command):
