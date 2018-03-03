@@ -5,6 +5,9 @@ from snake_control import SnakeHighCommand
 from states import FeedingState
 
 
+snake_commander = None
+
+
 @bottle.route('/')
 def static():
     return "the server is running"
@@ -19,14 +22,13 @@ def static(path):
 def start():
     data = bottle.request.json
 
+    global snake_commander
     snake_commander = SnakeHighCommand([FeedingState],
                                        data.get('width'),
                                        data.get('height'),
                                        data.get('id'))
 
     head_url = 'https://github.com/sendwithus/battlesnake-server/blob/master/assets/static/images/snake/head/tongue.svg'
-
-    # TODO: Do things with data
 
     return {
         'color': '#00FF00',
@@ -79,8 +81,6 @@ def process_move(data):
 @bottle.post('/move')
 def move():
     data = bottle.request.json
-
-    mysnake, grid = init(data)
 
     # TODO: Do things with data
 
