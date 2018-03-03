@@ -5,9 +5,10 @@ import pprint
 from .snake_control import SnakeHighCommand
 from .states import FeedingState
 
-
-snake_commanders = dict()
-
+try:
+    snake_commanders
+except NameError:
+    snake_commanders = dict()
 
 @bottle.route('/')
 def static():
@@ -28,7 +29,7 @@ def start():
     print(data)
 
     global snake_commanders
-    snake_commanders[int(data.get('game_id'))] = SnakeHighCommand([FeedingState],
+    snake_commanders[data.get('game_id')] = SnakeHighCommand([FeedingState],
                                                              data.get('width'),
                                                              data.get('height'),
                                                              data.get('game_id'))
@@ -60,7 +61,7 @@ def move():
         print(item)
     print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 
-    snake_commander = snake_commanders[int(data.get('id'))]
+    snake_commander = snake_commanders[data.get('id')]
     next_move = snake_commander.get_move(data)
 
     return {
