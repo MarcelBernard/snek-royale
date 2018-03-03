@@ -19,13 +19,15 @@ class Moves(Enum):
 
 # Contains information about a tile on the board
 class TileNode:
-    def __init__(self, TileType, snakeID, weight):
+    def __init__(self, TileType, snakeID, weight, position):
         # The type of tile
         self.type = TileType
         # ID of the snake.  If not applicable, ID will be ""
         self.snakeID = snakeID
         # Weight of the tile used by a path finding algorithm
         self.weight = weight
+        # position = (x,y) on game board
+        self.position = position
 
     def clear_node(self):
         self.type = TileType.EMPTY
