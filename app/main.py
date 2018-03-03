@@ -60,7 +60,6 @@ def move():
         print(item)
     print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 
-    global snake_commanders
     snake_commander = snake_commanders[int(data.get('id'))]
     next_move = snake_commander.get_move(data)
 
