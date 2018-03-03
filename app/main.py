@@ -48,13 +48,13 @@ def move():
     }
 
 
-@bottle.post('/end')
-def death_log():
-    data = bottle.request.json
-    with open('death_log.txt', 'a') as f:
-        f.write(data)
-
-    del snake_commanders[data.get('game_id')]
+# @bottle.post('/end')
+# def death_log():
+#     data = bottle.request.json
+#     with open('death_log.txt', 'a') as f:
+#         f.write(data)
+#
+#     del snake_commanders[data.get('game_id')]
 
 
 # Expose WSGI app (so gunicorn can find it)
