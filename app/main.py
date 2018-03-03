@@ -27,10 +27,14 @@ def start():
     print(data)
     print()
     print()
+    global snake_commanders
     snake_commanders[data.get('game_id')] = SnakeHighCommand([FeedingState],
                                                              data.get('width'),
                                                              data.get('height'),
                                                              data.get('game_id'))
+    print('SNAKE COMMANDERS W%&(*#@&(%*(%&@#(*%&*(@#&(*$&(@#(*&$()@#)$*(&@#(*%^@&#%&%(*#&%#&(%*&(#@(*%&@(#*%&(@*&%')
+    print(snake_commanders)
+    print('JEFFO DAVO STEPH MARCEL')
 
     head_url = 'https://github.com/sendwithus/battlesnake-server/blob/master/assets/static/images/snake/head/tongue.svg'
 
