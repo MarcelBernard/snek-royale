@@ -18,31 +18,25 @@ def static(path):
 @bottle.post('/start')
 def start():
     data = bottle.request.json
-    snake_commander = SnakeHighCommand(data)
-    game_id = data.get('id')
-    board_width = data.get('width')
-    board_height = data.get('height')
+
+    snake_commander = SnakeHighCommand([FeedingState],
+                                       data.get('width'),
+                                       data.get('height'),
+                                       data.get('id'))
 
     head_url = 'https://github.com/sendwithus/battlesnake-server/blob/master/assets/static/images/snake/head/tongue.svg'
-
-    # head_url = '%s://%s/static/head.png' % (
-    #     bottle.request.urlparts.scheme,
-    #     bottle.request.urlparts.netloc
-    # )
 
     # TODO: Do things with data
 
     return {
         'color': '#00FF00',
-        'taunt': '{} ({}x{})'.format(game_id, board_width, board_height),
+        'taunt': 'AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH!',
         'head_url': head_url
     }
 
 
 
 def process_move(data):
-
-
     grid = [[SAFE for col in xrange(data['height'])] for row in xrange(data['width'])]
 
     for x in xrange(len(grid)):
