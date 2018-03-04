@@ -38,7 +38,7 @@ def move():
     next_move = snake_commander.get_move(data)
 
     return {
-        'move': next_move,
+        'move': 'left',
         'taunt': 'AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH'
     }
 
