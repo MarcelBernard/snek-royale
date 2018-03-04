@@ -106,7 +106,7 @@ class BloodfillState:
         #     return 0
 
         # check which quadrant has the most open space
-        game_board = snake_high_command.game_board
+        game_board = snake_high_command.board
         MySnake = snake_high_command.my_snake
 
         upper_left = self.quadrant(game_board, MySnake.head, (0,0))
