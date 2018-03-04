@@ -36,9 +36,9 @@ def move():
                                        data.get('height'),
                                        data.get('id'))
     next_move = snake_commander.get_move(data)
-
+    print(next_move)
     return {
-        'move': 'left',
+        'move':  next_move,
         'taunt': 'AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH'
     }
 
