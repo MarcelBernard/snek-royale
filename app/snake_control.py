@@ -76,7 +76,7 @@ class SnakeHighCommand:
 
         # Ask each state for its evaluation value, tracking the state with the highest value
         for state in self.states:
-            evaluation = state.eval()
+            evaluation = state.eval(self)
             if evaluation > highest_eval:
                 highest_eval = evaluation
                 winner_state = state
