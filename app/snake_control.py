@@ -75,13 +75,13 @@ class SnakeHighCommand:
         winner_state = None
 
         # Ask each state for its evaluation value, tracking the state with the highest value
-        # for state in self.states:
-        #     evaluation = state.eval(self)
-        #     if evaluation > highest_eval:
-        #         highest_eval = evaluation
-        #         winner_state = state
+        for state in self.states:
+            evaluation = state.eval(self)
+            if evaluation > highest_eval:
+                highest_eval = evaluation
+                winner_state = state
 
-        # return winner_state.next_move()
+        return winner_state.next_move()
 
     # Populates the board with node information
     def parse_board_state(self, data):
