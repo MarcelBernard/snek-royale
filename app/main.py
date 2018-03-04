@@ -5,10 +5,6 @@ import pprint
 from .snake_control import SnakeHighCommand
 from .states import FeedingState
 
-try:
-    snake_commanders
-except NameError:
-    snake_commanders = dict()
 
 @bottle.route('/')
 def static():
@@ -22,24 +18,8 @@ def static(path):
 
 @bottle.post('/start')
 def start():
-    data = bottle.request.json
-    print('STARTING++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
-    print()
-    print()
-    print(data)
-
-    global snake_commanders
-    snake_commanders[data.get('game_id')] = SnakeHighCommand([FeedingState],
-                                                             data.get('width'),
-                                                             data.get('height'),
-                                                             data.get('game_id'))
-    pp = pprint.PrettyPrinter(indent=4)
-    pp.pprint(snake_commanders)
-
     head_url = 'https://github.com/sendwithus/battlesnake-server/blob/master/assets/static/images/snake/head/tongue.svg'
-    print()
-    print()
-    print('END STARTING++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+
     return {
         'color': '#00FF00',
         'taunt': 'AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH!',
@@ -49,26 +29,18 @@ def start():
 
 @bottle.post('/move')
 def move():
-    print('SNAKE COMMANDERS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
     data = bottle.request.json
-    pp = pprint.PrettyPrinter(indent=4)
 
-    pp.pprint(snake_commanders)
-    print(snake_commanders)
-    print('JEFFO DAVO STEPH MARCEL')
-    print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
-    for item in data.items():
-        print(item)
-    print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
-
-    snake_commander = snake_commanders[data.get('id')]
+    snake_commander = SnakeHighCommand(FeedingState,
+                                       data.get('width'),
+                                       data.get('height'),
+                                       data.get('id'))
     next_move = snake_commander.get_move(data)
 
     return {
         'move': next_move,
         'taunt': 'AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH'
     }
-
 
 # @bottle.post('/end')
 # def death_log():
