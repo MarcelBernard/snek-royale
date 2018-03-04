@@ -31,7 +31,8 @@ def start():
 def move():
     data = bottle.request.json
 
-    snake_commander = SnakeHighCommand([FeedingState()],
+    feeding_state = FeedingState()
+    snake_commander = SnakeHighCommand([feeding_state],
                                        data.get('width'),
                                        data.get('height'),
                                        data.get('id'))
