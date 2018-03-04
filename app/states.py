@@ -101,11 +101,14 @@ class BloodfillState:
         return len(visited)
 
 
-    def eval(self, MySnake, game_board):
-        if MySnake.previous_move is None:
-            return 0
+    def eval(self, snake_high_command):
+        # if MySnake.previous_move is None:
+        #     return 0
 
         # check which quadrant has the most open space
+        game_board = snake_high_command.game_board
+        MySnake = snake_high_command.my_snake
+
         upper_left = self.quadrant(game_board, MySnake.head, (0,0))
         upper_right = self.quadrant(game_board, MySnake.head, ((len(game_board) - 1),0))
         lower_left = self.quadrant(game_board, MySnake.head, (0, (len(game_board[0]) - 1)))
