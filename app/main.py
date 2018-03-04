@@ -3,7 +3,7 @@ import os
 import pprint
 
 from .snake_control import SnakeHighCommand
-from .states import FeedingState
+from .states import FeedingState, BloodfillState
 
 
 @bottle.route('/')
@@ -31,7 +31,7 @@ def start():
 def move():
     data = bottle.request.json
 
-    snake_commander = SnakeHighCommand(FeedingState,
+    snake_commander = SnakeHighCommand([FeedingState, BloodfillState],
                                        data.get('width'),
                                        data.get('height'),
                                        data.get('id'))
